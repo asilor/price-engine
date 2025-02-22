@@ -16,6 +16,23 @@ def get_database(connection_string: str, mongo_db_name: str) -> Database:
         raise
 
 
+def get_proxies(db: Database) -> list[str]:
+    """Returns a list of proxies."""
+    
+    proxies_collection = db["proxies"]
+    
+    proxies = []
+    for proxy in proxies_collection.find():
+        ip = proxy["ip"]
+        port = proxy["port"]
+        username = proxy["username"]
+        password = proxy["password"]
+        proxy = f"http://{username}:{password}@{ip}:{port}"
+        proxies.append(proxy)
+        
+    return proxies
+
+
 def yield_monitored_products(db: Database):
     """Yields monitored products from MongoDB."""
     

@@ -1,5 +1,4 @@
 from curl_cffi import requests
-import os
 
 
 class ProxyRotator:
@@ -32,18 +31,3 @@ class ProxyRotator:
                 print(f"{url} {error}")
                 self._remove_proxy()
         raise Exception("No proxies left")
-
-
-def get_proxies() -> list[str]:
-    """Returns a list of proxies."""
-
-    proxies = []
-
-    file_path = os.path.join(os.path.dirname(__file__), "proxies.txt")
-    with open(file_path, "r") as file:
-        for line in file:
-            ip, port, username, password = line.strip().split(":")
-            proxy = f"http://{username}:{password}@{ip}:{port}"
-            proxies.append(proxy)
-
-    return proxies

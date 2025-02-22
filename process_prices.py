@@ -33,10 +33,10 @@ def compute_optimal_price(prices: dict) -> float:
     latest_prices = {}
     for price in prices['prices']:
         retailer_id = str(price['retailer_id'])
-        if retailer_id not in latest_prices and price['price'] > 0 and retailer_id != ASILOR_ID:
+        if retailer_id not in latest_prices and retailer_id != ASILOR_ID:
             latest_prices[retailer_id] = price['price']
 
     ajust = -2
-    optimal_price = min(latest_prices.values()) + ajust
+    optimal_price = min(price for price in latest_prices.values() if price > 0) + ajust
 
     return optimal_price

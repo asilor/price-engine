@@ -39,6 +39,7 @@ def main() -> None:
 
     with ThreadPoolExecutor(max_workers=num_workers_process) as executor:
         for prices in yield_product_prices(db):
+            executor.submit(process_price, db, prices, base_url, access_token)
 
 
 if __name__ == "__main__":

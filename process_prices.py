@@ -18,20 +18,25 @@ def process_price(db: Database, prices: dict, base_url: str, access_token: str):
     }
 
     store_price(db, product, optimal_price)
-    #update_product_price(base_url, access_token, product_id, optimal_price)
+
+    product_id = prices["prestashop_id"]
+
+    TAX_RATE = 21
+    optimal_price_no_tax = round(optimal_price * 100 / (100 + TAX_RATE), 2)
+    
+    update_product_price(base_url, access_token, product_id, optimal_price_no_tax)
 
 
 def compute_optimal_price(prices: dict) -> float:
     """Compute optimal price by finding lowest price among most recent retailer prices."""
-    
+
     latest_prices = {}
     for price in prices['prices']:
-        retailer_id = price['retailer_id']
-        if retailer_id not in latest_prices and price['price'] > 0:
+        retailer_id = str(price['retailer_id'])
+        if retailer_id not in latest_prices and price['price'] > 0 and retailer_id != ASILOR_ID:
             latest_prices[retailer_id] = price['price']
-    
+
     ajust = -2
     optimal_price = min(latest_prices.values()) + ajust
-    print(f"Optimal price: {optimal_price}")
 
     return optimal_price

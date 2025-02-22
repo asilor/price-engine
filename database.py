@@ -62,6 +62,20 @@ def yield_product_prices(db: Database):
             "variant_id": "$_id.variant_id",
             "region_id": "$_id.region_id",
             "prices": 1
+        }},
+
+        {"$lookup": {
+            "from": "variants",
+            "localField": "variant_id",
+            "foreignField": "_id",
+            "as": "variant"
+        }},
+
+        {"$project": {
+            "variant_id": 1,
+            "region_id": 1,
+            "prices": 1,
+            "prestashop_id": {"$first": "$variant.prestashop_id"}
         }}
     ]
     

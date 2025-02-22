@@ -24,17 +24,16 @@ def main() -> None:
     proxy_rotator = ProxyRotator(proxies)
 
     num_workers_check = int(getenv("NUM_WORKERS_CHECK"))
-    
+
     with ThreadPoolExecutor(max_workers=num_workers_check) as executor:
         for product in yield_monitored_products(db):
             executor.submit(check_price, db, proxy_rotator, product)
-
 
     base_url = getenv("PRESTASHOP_BASE_URL")
     client_id = getenv("PRESTASHOP_CLIENT_ID")
     client_secret = getenv("PRESTASHOP_CLIENT_SECRET")
 
-    access_token = "" #get_access_token(base_url, client_id, client_secret)
+    access_token = get_access_token(base_url, client_id, client_secret)
 
     num_workers_process = int(getenv("NUM_WORKERS_PROCESS"))
 

@@ -7,8 +7,8 @@ import json
 PCCOMPONENTES_ID = "679a221c21cc010007e27941"
 
 
-def get_pccomponentes_prices(db: Database, proxy_rotator: ProxyRotator, product: dict) -> None:
-    """Gets the prices of the given product in all available languages and stores it in the database."""
+def check_pccomponentes_prices(db: Database, proxy_rotator: ProxyRotator, product: dict) -> None:
+    """Checks the prices of the given product in all available languages and stores it in the database."""
 
     product["retailer_id"] = ObjectId(PCCOMPONENTES_ID)
 

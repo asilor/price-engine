@@ -7,11 +7,11 @@ from selectolax.parser import HTMLParser
 AMAZON_ID = "67b2232121cc010007e27943"
 
 
-def get_amazon_price(db: Database, proxy_rotator: ProxyRotator, product: dict) -> None:
-    """Gets the price of the given product and stores it in the database."""
+def check_amazon_price(db: Database, proxy_rotator: ProxyRotator, product: dict) -> None:
+    """Checks the price of the given product and stores it in the database."""
 
     url = str(product["url"])
-    html = proxy_rotator.get_content(url)
+    html = get_amazon_html(proxy_rotator, url)
 
     price = parse_amazon_price(html)
 

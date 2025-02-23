@@ -7,8 +7,8 @@ import json
 TRADEINN_ID = "67900fe721cc010007e27784"
 
 
-def check_tradeinn_prices(db: Database, proxy_rotator: ProxyRotator, product: dict) -> None:
-    """Checks the prices of the given product in all available languages and stores it in the database."""
+def check_tradeinn_price(db: Database, proxy_rotator: ProxyRotator, product: dict) -> None:
+    """Checks the price of the given product in all available languages and stores it in the database."""
 
     product["retailer_id"] = ObjectId(TRADEINN_ID)
     
